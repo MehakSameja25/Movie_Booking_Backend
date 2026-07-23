@@ -12,6 +12,12 @@ const Screen = sequelize.define("Screen", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
+  status: {
+    type: DataTypes.ENUM("Active", "Inactive"),
+    allowNull: false,
+    defaultValue: "Active",
+  },
 });
 
 module.exports = Screen;
