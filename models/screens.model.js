@@ -13,6 +13,16 @@ const Screen = sequelize.define("Screen", {
     allowNull: false,
   },
 
+  rows: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+
+  columns: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+
   status: {
     type: DataTypes.ENUM("Active", "Inactive"),
     allowNull: false,

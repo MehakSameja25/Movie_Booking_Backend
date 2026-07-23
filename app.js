@@ -5,6 +5,7 @@ const roleRoutes = require("./routes/role.route");
 const permissionRoutes = require("./routes/permission.route");
 const authRoutes = require("./routes/auth.route");
 const cinemaRoutes = require("./routes/cinema.route");
+const screenRoutes = require("./routes/screen.route");
 
 const authMiddleware = require("./middlewares/auth.middleware");
 
@@ -17,5 +18,6 @@ app.use("/roles", authMiddleware.authenticate, roleRoutes);
 app.use("/permissions", authMiddleware.authenticate, permissionRoutes);
 app.use("/permissions", authMiddleware.authenticate, permissionRoutes);
 app.use("/cinemas", authMiddleware.authenticate, cinemaRoutes);
+app.use("/screens", authMiddleware.authenticate, screenRoutes);
 
 module.exports = app;
