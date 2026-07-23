@@ -23,6 +23,7 @@ const getAllPermissions = async (req, res) => {
 
     return res.status(200).json({
       success: true,
+      message: "Permissions fetched successfully",
       data: permissions,
     });
   } catch (error) {
@@ -47,6 +48,7 @@ const getPermissionById = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: permission,
+      message: "Permission fetched successfully",
     });
   } catch (error) {
     return res.status(500).json({
