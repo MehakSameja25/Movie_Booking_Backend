@@ -5,7 +5,7 @@ const userController = require("../controllers/user.controller");
 
 const { checkPermission } = require("../middlewares/permission.middleware");
 
-router.post("/", checkPermission("user.hh"), userController.createUser);
+router.post("/", checkPermission("user.create"), userController.createUser);
 
 router.get("/", checkPermission("user.read"), userController.getAllUsers);
 

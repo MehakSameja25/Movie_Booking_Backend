@@ -120,6 +120,24 @@ const seedPermissions = async () => {
       name: "seat.status",
       description: "Update seat status",
     },
+
+    // Movie Permissions
+    {
+      name: "movie.create",
+      description: "Create movies",
+    },
+    {
+      name: "movie.read",
+      description: "View movies",
+    },
+    {
+      name: "movie.update",
+      description: "Update movies",
+    },
+    {
+      name: "movie.status",
+      description: "Update movie status",
+    },
   ];
 
   for (const permission of permissions) {
