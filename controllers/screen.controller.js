@@ -67,6 +67,20 @@ const getScreenById = async (req, res) => {
 
 const updateScreen = async (req, res) => {
   try {
+    if ("rows" in req.body || "columns" in req.body) {
+      return res.status(400).json({
+        success: false,
+        message: "Screen layout cannot be changed after creation.",
+      });
+    }
+
+    if ("cinemaId" in req.body) {
+      return res.status(400).json({
+        success: false,
+        message: "Cinema cannot be changed after creation.",
+      });
+    }
+
     const screen = await screenService.updateScreen(req.params.id, req.body);
 
     if (!screen) {

@@ -1,4 +1,6 @@
 const Cinema = require("../models/cinemas.model");
+const Screen = require("../models/screens.model");
+const Seat = require("../models/seats.model");
 const createCinema = async (data) => {
   const cinema = await Cinema.create(data);
 
@@ -16,6 +18,18 @@ const getCinemaById = async (id) => {
     where: {
       id,
     },
+    include: [
+      {
+        model: Screen,
+        as: "screens",
+        include: [
+          {
+            model: Seat,
+            as: "seats",
+          },
+        ],
+      },
+    ],
   });
 
   return cinema;

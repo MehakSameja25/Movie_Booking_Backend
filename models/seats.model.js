@@ -13,6 +13,16 @@ const Seat = sequelize.define("Seat", {
     allowNull: false,
   },
 
+  row: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
+  column: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+
   status: {
     type: DataTypes.ENUM("Available", "Booked", "Blocked"),
     allowNull: false,
