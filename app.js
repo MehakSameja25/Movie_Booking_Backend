@@ -9,6 +9,7 @@ const cinemaRoutes = require("./routes/cinema.route");
 const screenRoutes = require("./routes/screen.route");
 const seatRoutes = require("./routes/seat.route");
 const movieRoutes = require("./routes/movie.route");
+const showRoutes = require("./routes/show.route");
 
 const authMiddleware = require("./middlewares/auth.middleware");
 
@@ -25,5 +26,6 @@ app.use("/cinemas", authMiddleware.authenticate, cinemaRoutes);
 app.use("/screens", authMiddleware.authenticate, screenRoutes);
 app.use("/seats", authMiddleware.authenticate, seatRoutes);
 app.use("/movies", authMiddleware.authenticate, movieRoutes);
+app.use("/shows", authMiddleware.authenticate, showRoutes);
 
 module.exports = app;

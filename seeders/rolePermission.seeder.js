@@ -71,6 +71,12 @@ const seedRolePermissions = async () => {
         "movie.read",
         "movie.update",
         "movie.status",
+
+        // Show
+        "show.create",
+        "show.read",
+        "show.update",
+        "show.status",
       ],
     },
   });

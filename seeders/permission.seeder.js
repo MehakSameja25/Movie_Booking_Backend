@@ -138,6 +138,24 @@ const seedPermissions = async () => {
       name: "movie.status",
       description: "Update movie status",
     },
+
+    // Show Permissions
+    {
+      name: "show.create",
+      description: "Create shows",
+    },
+    {
+      name: "show.read",
+      description: "View shows",
+    },
+    {
+      name: "show.update",
+      description: "Update shows",
+    },
+    {
+      name: "show.status",
+      description: "Update show status",
+    },
   ];
 
   for (const permission of permissions) {
