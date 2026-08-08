@@ -7,6 +7,8 @@ const Screen = require("./screens.model");
 const Seat = require("./seats.model");
 const Movie = require("./movie.model");
 const Show = require("./show.model");
+const Booking = require("./booking.model");
+const BookingSeat = require("./bookingSeat.model");
 
 // ! --------User & Role Relation---------  *****
 Role.hasMany(User, {
@@ -84,6 +86,20 @@ Show.belongsTo(Screen, {
 });
 // ? --------Screen & Show Relation--------- *****
 
+// ! --------Booking Relations--------- *****
+User.hasMany(Booking, { foreignKey: "userId", as: "bookings" });
+Booking.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+Show.hasMany(Booking, { foreignKey: "showId", as: "bookings" });
+Booking.belongsTo(Show, { foreignKey: "showId", as: "show" });
+
+Booking.hasMany(BookingSeat, { foreignKey: "bookingId", as: "seats" });
+BookingSeat.belongsTo(Booking, { foreignKey: "bookingId", as: "booking" });
+
+Seat.hasMany(BookingSeat, { foreignKey: "seatId", as: "bookingSeats" });
+BookingSeat.belongsTo(Seat, { foreignKey: "seatId", as: "seat" });
+// ! --------Booking Relations--------- *****
+
 module.exports = {
   User,
   Role,
@@ -94,4 +110,6 @@ module.exports = {
   Seat,
   Movie,
   Show,
+  Booking,
+  BookingSeat,
 };
