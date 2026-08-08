@@ -16,7 +16,7 @@ const seedSuperAdmin = async () => {
 
   const existingUser = await User.findOne({
     where: {
-      email: "admin@gmail.com",
+      email: "mahaksameja86@gmail.com",
     },
   });
 
@@ -28,9 +28,9 @@ const seedSuperAdmin = async () => {
   const hashedPassword = await bcrypt.hash("Admin@123", 10);
 
   await User.create({
-    firstName: "Super",
-    lastName: "Admin",
-    email: "admin@gmail.com",
+    firstName: "Mahak",
+    lastName: "Sameja",
+    email: "mahaksameja86@gmail.com",
     password: hashedPassword,
     roleId: role.id,
   });

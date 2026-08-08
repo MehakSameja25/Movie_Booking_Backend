@@ -79,9 +79,9 @@ const forgotPassword = async (email) => {
   );
 
   const resetURL =
-    user.role.name === "Admin"
-      ? `${process.env.FRONTEND_ADMIN_URL}/auth/reset/${token}?mail=${email}`
-      : `${process.env.FRONTEND_USER_URL}/reset/${token}?mail=${email}`;
+    user.role.name === "Super Admin" || user.role.name === "Admin"
+      ? `${process.env.FRONTEND_ADMIN_URL}/auth/reset-password?token=${token}&mail=${email}`
+      : `${process.env.FRONTEND_USER_URL}/reset-password?token=${token}&mail=${email}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password to: \n${resetURL}\nIf you didn't forget your password, please ignore this email!`;
 
@@ -92,6 +92,7 @@ const forgotPassword = async (email) => {
       message,
     });
   } catch (err) {
+    console.error("Email sending failed:", err);
     throw new Error("There was an error sending the email. Try again later!");
   }
 };
