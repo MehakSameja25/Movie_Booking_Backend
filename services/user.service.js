@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const Role = require("../models/role.model");
@@ -14,11 +14,38 @@ const createUser = async (userData) => {
   return user;
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (roles) => {
+  let whereClause = {};
+
+  if (roles && Array.isArray(roles) && roles.length > 0) {
+    whereClause = {
+      roleId: {
+        [Op.in]: roles
+      }
+    };
+  }
+
   const users = await User.findAll({
+    where: whereClause,
     attributes: {
       exclude: ["password"],
     },
+
+    include: [
+      {
+        model: Role,
+        as: "role",
+        include: [
+          {
+            model: Permission,
+            as: "permissions",
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+      },
+    ],
   });
 
   return users;

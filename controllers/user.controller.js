@@ -30,7 +30,14 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await userService.getAllUsers();
+    let roles = [];
+    if (req.query.roles) {
+      roles = Array.isArray(req.query.roles) 
+        ? req.query.roles 
+        : req.query.roles.split(",");
+    }
+
+    const users = await userService.getAllUsers(roles);
 
     return res.status(200).json(users);
   } catch (error) {

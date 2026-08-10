@@ -11,11 +11,11 @@ router.get("/", checkPermission("user.read"), userController.getAllUsers);
 
 router.get("/:id", checkPermission("user.read"), userController.findUserById);
 
-router.put("/:id", checkPermission("user.delete"), userController.updateUser);
+router.put("/:id", checkPermission("user.update"), userController.updateUser);
 
 router.delete(
   "/:id",
-  checkPermission("user.create"),
+  checkPermission("user.delete"),
   userController.deleteUser,
 );
 
