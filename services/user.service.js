@@ -14,7 +14,7 @@ const createUser = async (userData) => {
   return user;
 };
 
-const getAllUsers = async (roles) => {
+const getAllUsers = async (roles, limit, offset) => {
   let whereClause = {};
 
   if (roles && Array.isArray(roles) && roles.length > 0) {
@@ -25,12 +25,11 @@ const getAllUsers = async (roles) => {
     };
   }
 
-  const users = await User.findAll({
+  const queryOptions = {
     where: whereClause,
     attributes: {
       exclude: ["password"],
     },
-
     include: [
       {
         model: Role,
@@ -46,7 +45,15 @@ const getAllUsers = async (roles) => {
         ],
       },
     ],
-  });
+  };
+
+  if (limit !== undefined && offset !== undefined) {
+    queryOptions.limit = limit;
+    queryOptions.offset = offset;
+    queryOptions.distinct = true;
+  }
+
+  const users = await User.findAndCountAll(queryOptions);
 
   return users;
 };
