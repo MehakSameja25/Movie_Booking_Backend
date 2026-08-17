@@ -1,5 +1,6 @@
 const Role = require("../models/role.model");
 const RolePermission = require("../models/rolePermission.model");
+const Permission = require("../models/permission.model");
 
 const createRole = async (roleData) => {
   return await Role.create(roleData);
@@ -13,7 +14,7 @@ const getAllRoles = async (query = {}) => {
 };
 
 const getRoleById = async (id) => {
-  return await Role.findByPk(id);
+  return await Role.findByPk(id, { include: [{ model: Permission, as: 'permissions' }] });
 };
 
 const updateRole = async (id, roleData) => {
@@ -65,4 +66,5 @@ module.exports = {
   deleteRole,
   assignPermissions,
 };
+
 
