@@ -19,12 +19,12 @@ const createRole = async (req, res) => {
 
 const getAllRoles = async (req, res) => {
   try {
-    const roles = await roleService.getAllRoles();
+    const roles = await roleService.getAllRoles(req.query);
 
     return res.status(200).json({
       success: true,
       message: "Roles fetched successfully.",
-      data: roles,
+      roles,
     });
   } catch (error) {
     return res.status(500).json({
@@ -136,3 +136,4 @@ module.exports = {
   deleteRole,
   assignPermissions,
 };
+

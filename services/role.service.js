@@ -5,8 +5,11 @@ const createRole = async (roleData) => {
   return await Role.create(roleData);
 };
 
-const getAllRoles = async () => {
-  return await Role.findAll();
+const getAllRoles = async (query = {}) => {
+  const page = parseInt(query.page) || 1;
+  const limit = parseInt(query.limit) || 20;
+  const offset = (page - 1) * limit;
+  return await Role.findAndCountAll({ limit, offset });
 };
 
 const getRoleById = async (id) => {
@@ -62,3 +65,4 @@ module.exports = {
   deleteRole,
   assignPermissions,
 };
+
