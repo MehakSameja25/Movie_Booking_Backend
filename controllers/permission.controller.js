@@ -19,12 +19,12 @@ const createPermission = async (req, res) => {
 
 const getAllPermissions = async (req, res) => {
   try {
-    const permissions = await permissionService.getAllPermissions();
+    const permissions = await permissionService.getAllPermissions(req.query);
 
     return res.status(200).json({
       success: true,
       message: "Permissions fetched successfully",
-      data: permissions,
+      permissions,
     });
   } catch (error) {
     return res.status(500).json({
@@ -115,3 +115,4 @@ module.exports = {
   updatePermission,
   deletePermission,
 };
+
