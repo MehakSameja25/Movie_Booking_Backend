@@ -19,12 +19,17 @@ const createCinema = async (req, res) => {
 
 const getAllCinemas = async (req, res) => {
   try {
-    const cinemas = await cinemaService.getAllCinemas();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+
+    const cinemas = await cinemaService.getAllCinemas(page, limit);
 
     return res.status(200).json({
       success: true,
       message: "Cinemas fetched successfully",
-      data: cinemas,
+      data: {
+        cinemas
+      },
     });
   } catch (error) {
     return res.status(500).json({
@@ -123,3 +128,4 @@ module.exports = {
   updateCinema,
   updateCinemaStatus,
 };
+

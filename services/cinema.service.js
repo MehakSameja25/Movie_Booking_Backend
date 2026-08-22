@@ -7,8 +7,14 @@ const createCinema = async (data) => {
   return cinema;
 };
 
-const getAllCinemas = async () => {
-  const cinemas = await Cinema.findAll();
+const getAllCinemas = async (page = 1, limit = 20) => {
+  const offset = (page - 1) * limit;
+
+  const cinemas = await Cinema.findAndCountAll({
+    offset,
+    limit,
+    order: [["createdAt", "DESC"]],
+  });
 
   return cinemas;
 };
@@ -68,3 +74,4 @@ module.exports = {
   updateCinema,
   updateCinemaStatus,
 };
+
