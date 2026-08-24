@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const Screen = require("../models/screens.model");
 const Cinema = require("../models/cinemas.model");
 const Seat = require("../models/seats.model");

@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const Cinema = require("../models/cinemas.model");
 const Screen = require("../models/screens.model");
 const Seat = require("../models/seats.model");
@@ -7,10 +8,15 @@ const createCinema = async (data) => {
   return cinema;
 };
 
-const getAllCinemas = async (page = 1, limit = 20) => {
+const getAllCinemas = async (page = 1, limit = 20, search = '') => {
   const offset = (page - 1) * limit;
-
+  const where = {};
+  if (search) {
+    where.name = { [Op.like]: `%${search}%` };
+  }
   const cinemas = await Cinema.findAndCountAll({
+    where,
+
     offset,
     limit,
     order: [["createdAt", "DESC"]],

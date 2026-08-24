@@ -19,7 +19,8 @@ const createShow = async (req, res) => {
 
 const getShows = async (req, res) => {
   try {
-    const shows = await showService.getShows();
+    const { date, cinemaId } = req.query;
+    const shows = await showService.getShows(date, cinemaId);
 
     res.status(200).json({
       success: true,
