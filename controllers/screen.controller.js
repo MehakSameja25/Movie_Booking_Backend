@@ -26,12 +26,17 @@ const createScreen = async (req, res) => {
 
 const getAllScreens = async (req, res) => {
   try {
-    const screens = await screenService.getAllScreens();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+
+    const screens = await screenService.getAllScreens(page, limit);
 
     return res.status(200).json({
       success: true,
       message: "Screens fetched successfully.",
-      data: screens,
+      data: {
+        screens
+      },
     });
   } catch (error) {
     return res.status(500).json({
@@ -144,3 +149,4 @@ module.exports = {
   updateScreen,
   updateScreenStatus,
 };
+

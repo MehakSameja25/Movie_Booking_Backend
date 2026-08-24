@@ -34,8 +34,21 @@ const createScreen = async (data) => {
   return screen;
 };
 
-const getAllScreens = async () => {
-  const screens = await Screen.findAll();
+const getAllScreens = async (page = 1, limit = 20) => {
+  const offset = (page - 1) * limit;
+
+  const screens = await Screen.findAndCountAll({
+    offset,
+    limit,
+    include: [
+      {
+        model: Cinema,
+        as: "cinema",
+        attributes: ["id", "name", "location"],
+      }
+    ],
+    order: [["createdAt", "DESC"]],
+  });
 
   return screens;
 };
@@ -95,3 +108,4 @@ module.exports = {
   updateScreen,
   updateScreenStatus,
 };
+
