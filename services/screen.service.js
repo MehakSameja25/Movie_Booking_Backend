@@ -34,10 +34,16 @@ const createScreen = async (data) => {
   return screen;
 };
 
-const getAllScreens = async (page = 1, limit = 20) => {
+const getAllScreens = async (page = 1, limit = 20, cinemaId = null) => {
   const offset = (page - 1) * limit;
 
+  const where = {};
+  if (cinemaId) {
+    where.cinemaId = cinemaId;
+  }
+
   const screens = await Screen.findAndCountAll({
+    where,
     offset,
     limit,
     include: [
