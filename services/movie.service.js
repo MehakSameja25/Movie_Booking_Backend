@@ -6,11 +6,18 @@ const createMovie = async (data) => {
   return movie;
 };
 
-const getAllMovies = async () => {
-  const movies = await Movie.findAll();
+const getAllMovies = async (page = 1, limit = 20) => {
+  const offset = (page - 1) * limit;
+
+  const movies = await Movie.findAndCountAll({
+    offset,
+    limit,
+    order: [["createdAt", "DESC"]],
+  });
 
   return movies;
 };
+
 
 const getMovieById = async (id) => {
   const movie = await Movie.findOne({

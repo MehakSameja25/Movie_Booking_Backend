@@ -36,12 +36,17 @@ const createMovie = async (req, res) => {
 
 const getAllMovies = async (req, res) => {
   try {
-    const movies = await movieService.getAllMovies();
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+
+    const movies = await movieService.getAllMovies(page, limit);
 
     return res.status(200).json({
       success: true,
       message: "Movies fetched successfully.",
-      data: movies,
+      data: {
+        movies
+      },
     });
   } catch (error) {
     return res.status(500).json({
