@@ -35,12 +35,16 @@ const createScreen = async (data) => {
   return screen;
 };
 
-const getAllScreens = async (page = 1, limit = 20, cinemaId = null) => {
+const getAllScreens = async (page = 1, limit = 20, cinemaId = null, search = '') => {
   const offset = (page - 1) * limit;
 
   const where = {};
   if (cinemaId) {
     where.cinemaId = cinemaId;
+  }
+
+  if (search) {
+    where.name = { [Op.like]: `%${search}%` };
   }
 
   const screens = await Screen.findAndCountAll({

@@ -49,22 +49,37 @@ const createShow = async (data) => {
   return show;
 };
 
-const getShows = async () => {
+const getShows = async (date, cinemaId) => {
+  const where = {
+    status: "Active",
+  };
+
+  console.log("------------------------------", date);
+
+
+  if (date) {
+    where.showDate = date;
+  }
+
+  const screenInclude = {
+    model: Screen,
+    as: "screen",
+    attributes: ["id", "name"],
+  };
+
+  if (cinemaId) {
+    screenInclude.where = { cinemaId };
+  }
+
   const shows = await Show.findAll({
-    where: {
-      status: "Active",
-    },
+    where,
     include: [
       {
         model: Movie,
         as: "movie",
         attributes: ["id", "title", "poster"],
       },
-      {
-        model: Screen,
-        as: "screen",
-        attributes: ["id", "name"],
-      },
+      screenInclude,
     ],
   });
 

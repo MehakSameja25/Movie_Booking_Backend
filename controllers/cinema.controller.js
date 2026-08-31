@@ -20,9 +20,10 @@ const createCinema = async (req, res) => {
 const getAllCinemas = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
+      const limit = parseInt(req.query.limit) || 20;
+      const search = req.query.search || '';
 
-    const cinemas = await cinemaService.getAllCinemas(page, limit);
+      const cinemas = await cinemaService.getAllCinemas(page, limit, search);
 
     return res.status(200).json({
       success: true,

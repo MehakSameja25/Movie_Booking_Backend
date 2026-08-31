@@ -29,8 +29,9 @@ const getAllScreens = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const cinemaId = req.query.cinemaId ? parseInt(req.query.cinemaId) : null;
+    const search = req.query.search || '';
 
-    const screens = await screenService.getAllScreens(page, limit, cinemaId);
+    const screens = await screenService.getAllScreens(page, limit, cinemaId, search);
 
     return res.status(200).json({
       success: true,
