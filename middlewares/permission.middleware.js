@@ -1,6 +1,6 @@
 const checkPermission = (requiredPermission) => {
   return (req, res, next) => {
-    const permissions = req.user.permissions;
+    if (!req.user) { console.error("Missing req.user for route:", req.method, req.originalUrl); return res.status(401).json({ success: false, message: "Missing req.user" }); } const permissions = req.user.permissions;
 
     if (permissions.includes("*")) {
       return next();

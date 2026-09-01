@@ -23,11 +23,11 @@ app.use("/users", authMiddleware.authenticate, userRoutes);
 app.use("/roles", authMiddleware.authenticate, roleRoutes);
 app.use("/permissions", authMiddleware.authenticate, permissionRoutes);
 app.use("/permissions", authMiddleware.authenticate, permissionRoutes);
-app.use("/cinemas", authMiddleware.authenticate, cinemaRoutes);
-app.use("/screens", authMiddleware.authenticate, screenRoutes);
+app.use("/cinemas", cinemaRoutes);
+app.use("/screens", screenRoutes);
 app.use("/seats", authMiddleware.authenticate, seatRoutes);
-app.use("/movies", authMiddleware.authenticate, movieRoutes);
-app.use("/shows", authMiddleware.authenticate, showRoutes);
+app.use("/movies", movieRoutes);
+app.use("/shows", showRoutes);
 app.use("/bookings", authMiddleware.authenticate, bookingRoutes);
 
 module.exports = app;

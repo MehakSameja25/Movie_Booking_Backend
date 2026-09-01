@@ -1,4 +1,4 @@
-const { Show, Movie, Screen } = require("../models");
+const { Show, Movie, Screen, BookingSeat, Booking, Seat } = require("../models");
 const { Op } = require("sequelize");
 
 const createShow = async (data) => {
@@ -53,8 +53,6 @@ const getShows = async (date, cinemaId) => {
   const where = {
     status: "Active",
   };
-
-  console.log("------------------------------", date);
 
 
   if (date) {
@@ -131,10 +129,41 @@ const updateShowStatus = async (id, status) => {
   return show;
 };
 
+const getShowSeats = async (showId) => {
+  const show = await Show.findByPk(showId);
+  if (!show) throw new Error('Show not found.');
+
+  const seats = await Seat.findAll({
+    where: { screenId: show.screenId },
+    order: [['row', 'ASC'], ['column', 'ASC']]
+  });
+
+  const bookedSeats = await BookingSeat.findAll({
+    where: { showId: show.id },
+    include: [{
+      model: Booking,
+      as: 'booking',
+      where: { status: { [Op.ne]: 'Cancelled' } }
+    }]
+  });
+
+  const bookedSeatIds = bookedSeats.map(bs => bs.seatId);
+
+  return seats.map(seat => {
+    const s = seat.toJSON();
+    if (bookedSeatIds.includes(s.id) && s.status !== 'Blocked') {
+      s.status = 'Booked';
+    }
+    return s;
+  });
+};
+
 module.exports = {
+  getShowSeats,
   createShow,
   getShows,
   getShowById,
   updateShow,
   updateShowStatus,
 };
+

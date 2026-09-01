@@ -89,7 +89,17 @@ const updateShowStatus = async (req, res) => {
   }
 };
 
+const getShowSeats = async (req, res) => {
+  try {
+    const seats = await showService.getShowSeats(req.params.id);
+    res.status(200).json({ success: true, message: 'Seats fetched successfully', data: seats });
+  } catch (error) {
+    res.status(404).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
+  getShowSeats,
   createShow,
   getShows,
   getShowById,

@@ -53,7 +53,12 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  return res.status(200).json({ success: true, message: "Logged out successfully" });
+};
+
 module.exports = {
+  logout,
   login,
   forgotPassword,
   resetPassword,

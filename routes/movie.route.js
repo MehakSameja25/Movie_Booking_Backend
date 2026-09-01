@@ -2,7 +2,7 @@ const express = require("express");
 
 const movieController = require("../controllers/movie.controller");
 
-const { checkPermission } = require("../middlewares/permission.middleware");
+const { checkPermission } = require("../middlewares/permission.middleware"); const { authenticate } = require("../middlewares/auth.middleware");
 const multer = require("multer");
 
 const router = express.Router();
@@ -12,24 +12,24 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post(
   "/",
   upload.single("poster"),
-  checkPermission("movie.create"),
+  authenticate, checkPermission("movie.create"),
   movieController.createMovie,
 );
 
-router.get("/", checkPermission("movie.read"), movieController.getAllMovies);
+router.get("/", movieController.getAllMovies);
 
-router.get("/:id", checkPermission("movie.read"), movieController.getMovieById);
+router.get("/:id", movieController.getMovieById);
 
 router.put(
   "/:id",
   upload.single("poster"),
-  checkPermission("movie.update"),
+  authenticate, checkPermission("movie.update"),
   movieController.updateMovie,
 );
 
 router.put(
   "/:id/status",
-  checkPermission("movie.status"),
+  authenticate, checkPermission("movie.status"),
   movieController.updateMovieStatus,
 );
 

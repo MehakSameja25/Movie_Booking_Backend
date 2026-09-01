@@ -1,33 +1,32 @@
 const express = require("express");
 
 const cinemaController = require("../controllers/cinema.controller");
-const { checkPermission } = require("../middlewares/permission.middleware");
+const { checkPermission } = require("../middlewares/permission.middleware"); const { authenticate } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
 router.post(
   "/",
-  checkPermission("cinema.create"),
+  authenticate, checkPermission("cinema.create"),
   cinemaController.createCinema,
 );
 
-router.get("/", checkPermission("cinema.read"), cinemaController.getAllCinemas);
+router.get("/", cinemaController.getAllCinemas);
 
 router.get(
   "/:id",
-  checkPermission("cinema.read"),
   cinemaController.getCinemaById,
 );
 
 router.put(
   "/:id",
-  checkPermission("cinema.update"),
+  authenticate, checkPermission("cinema.update"),
   cinemaController.updateCinema,
 );
 
 router.put(
   "/:id/status",
-  checkPermission("cinema.status"),
+  authenticate, checkPermission("cinema.status"),
   cinemaController.updateCinemaStatus,
 );
 
