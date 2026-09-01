@@ -116,7 +116,34 @@ const resetPassword = async (email, token, newPassword) => {
   await user.update({ password: hashedPassword });
 };
 
+
+const register = async (firstName, lastName, email, phone, password) => {
+  const existingUser = await User.findOne({ where: { email } });
+  if (existingUser) {
+    throw new Error("Email is already in use.");
+  }
+
+  const userRole = await Role.findOne({ where: { name: 'User' } });
+  if (!userRole) {
+    throw new Error("Default User role not found in system.");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await User.create({
+    firstName,
+    lastName,
+    email,
+    phone,
+    password: hashedPassword,
+    roleId: userRole.id,
+    status: 'Active'
+  });
+
+  return newUser;
+};
 module.exports = {
+  register,
   login,
   forgotPassword,
   resetPassword,

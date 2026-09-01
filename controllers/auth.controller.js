@@ -57,7 +57,34 @@ const logout = async (req, res) => {
   return res.status(200).json({ success: true, message: "Logged out successfully" });
 };
 
+
+const register = async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, password } = req.body;
+
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "First name, last name, email, and password are required.",
+      });
+    }
+
+    const result = await authService.register(firstName, lastName, email, phone, password);
+
+    return res.status(201).json({
+      success: true,
+      message: "Registration successful.",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
+  register,
   logout,
   login,
   forgotPassword,
